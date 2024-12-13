@@ -19,8 +19,8 @@ const container = document.querySelector('.container');
 const display = document.querySelector('.display');
 const firstNumDisplay = document.querySelector('#firstNum');
 const secondNumDisplay = document.querySelector('#secNum');
-const operatorDisplay = document.querySelector('#operator');
-
+const operatorDisplay = document.querySelector('#operatorDisplay');
+firstNumDisplay.innerText = '0'
 
 const numbers = document.querySelectorAll('.numbers');
 numbers.forEach(number => {
@@ -35,7 +35,7 @@ numbers.forEach(number => {
     })
 });
 
-const operators = document.querySelectorAll('.symbols');
+const operators = document.querySelectorAll('.operators');
 operators.forEach(op => {
     op.addEventListener('click', () => {
         if (secondNumDisplay.innerText) {
@@ -48,16 +48,39 @@ operators.forEach(op => {
     })
 });
 
+const decimal = document.querySelector('#decimal');
+decimal.addEventListener('click', () => {
+    if (secondNumDisplay.innerText) {
+        secondNumDisplay.innerText = secondNumDisplay.innerText + '.';
+    } else if (!operatorDisplay.innerText) {
+        firstNumDisplay.innerText = firstNumDisplay.innerText + '.';
+    }
+});
+
+const percent = document.querySelector('#percentage');
+percent.addEventListener('click', () => {
+    if (secondNumDisplay.innerText) {
+        secondNumDisplay.innerText = Number(secondNumDisplay.innerText) / 100;
+    } else if (!operatorDisplay.innerText) {
+        firstNumDisplay.innerText = Number(firstNumDisplay.innerText) / 100;
+    }
+});
+
 let firstOperand = 0;
 let secondOperand = 0;
 let operator = '';
 
 const equal = document.querySelector('#equal');
 equal.addEventListener('click', () => {
+    let result;
     firstOperand = Number(firstNumDisplay.innerText);
     secondOperand = Number(secondNumDisplay.innerText);
     operator = operatorDisplay.innerText.trim();
-    let result = operate(firstOperand, operator, secondOperand);
+    if (!secondOperand) {
+        result = firstOperand;
+    } else {
+        result = operate(firstOperand, operator, secondOperand);
+    }
 
     firstNumDisplay.innerText = result;
     secondNumDisplay.innerText = '';
@@ -77,8 +100,11 @@ deleteBtn.addEventListener('click', () => {
         secondNumDisplay.innerText = secondNumDisplay.innerText.slice(0, -1);
     } else if (operatorDisplay.innerText) {
         operatorDisplay.innerText = '';
-    } else {
+    } else if (firstNumDisplay.innerText) {
         firstNumDisplay.innerText = firstNumDisplay.innerText.slice(0, -1);
+        if (!firstNumDisplay.innerText) {
+            firstNumDisplay.innerText = '0';
+        }
     }
 });
 
