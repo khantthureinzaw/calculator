@@ -7,7 +7,7 @@ function subtract(x, y) {
 }
 
 function multiply(x, y) {
-    return x * y;
+    return Math.round((x * y) * 1000000) / 1000000;
 }
 
 function divide(x, y) {
@@ -15,7 +15,7 @@ function divide(x, y) {
         return 'You can\'t divide by zero!';
     }
     else {
-        return Math.round((x / y) * 100) / 100;
+        return Math.round((x / y) * 1000000) / 1000000;
     }
 }
 
