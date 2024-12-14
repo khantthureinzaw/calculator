@@ -11,8 +11,12 @@ function multiply(x, y) {
 }
 
 function divide(x, y) {
-    if (y === 0) return 'You can\'t divide by zero!'
-    return Math.round((x / y) * 100) / 100;
+    if (y === 0) {
+        return 'You can\'t divide by zero!';
+    }
+    else {
+        return Math.round((x / y) * 100) / 100;
+    }
 }
 
 const container = document.querySelector('.container');
@@ -50,9 +54,9 @@ operators.forEach(op => {
 
 const decimal = document.querySelector('#decimal');
 decimal.addEventListener('click', () => {
-    if (secondNumDisplay.innerText) {
+    if (secondNumDisplay.innerText && !secondNumDisplay.innerText.includes('.')) {
         secondNumDisplay.innerText = secondNumDisplay.innerText + '.';
-    } else if (!operatorDisplay.innerText) {
+    } else if (!operatorDisplay.innerText && !firstNumDisplay.innerText.includes('.')) {
         firstNumDisplay.innerText = firstNumDisplay.innerText + '.';
     }
 });
@@ -67,7 +71,7 @@ percent.addEventListener('click', () => {
 });
 
 let firstOperand = 0;
-let secondOperand = 0;
+let secondOperand;
 let operator = '';
 
 const equal = document.querySelector('#equal');
@@ -76,7 +80,7 @@ equal.addEventListener('click', () => {
     firstOperand = Number(firstNumDisplay.innerText);
     secondOperand = Number(secondNumDisplay.innerText);
     operator = operatorDisplay.innerText.trim();
-    if (!secondOperand) {
+    if (!secondNumDisplay.innerText) {
         result = firstOperand;
     } else {
         result = operate(firstOperand, operator, secondOperand);
